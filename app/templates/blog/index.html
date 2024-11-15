@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block header %}
+<h1>
+  {% block title %}Posts{% endblock %} {% if g.user %}
+  <a class="action btn btn-new-post" href="{{ url_for('blog.create') }}"
+    ><i class="fa fa-plus-circle"></i> New Post</a
+  >
+  {% endif %}
+</h1>
+{% endblock %} {% block content %}
+
+<section id="gallery">
+  <div class="container posts">
+    {% for post in posts %}
+    <div class="row">
+      <div class="col-lg-8 mb-8 offset-2">
+        <div class="card post-card">
+          <div class="card-header">
+            <div class="media">
+              <a class="thumbnail pull-left" href="#">
+                <i span class="fa fa-user-circle fa-3x text-dark"></i>
+              </a>
+              <div class="media-body">
+                <h5 class="media-heading m-1">@{{ post['username'] }}</h5>
+                <p>
+                  <span class="label label-info small"
+                    >Date: {{ post['created'].strftime('%d-%m-%Y, %T') }}</span
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ post['title'] }}</h5>
+            <p class="card-text">{{ post['body'] }}</p>
+            {% if g.user['id'] == post['author_id'] %}
+            <a
+              class="action btn btn-outline-primary btn-sm"
+              href="{{ url_for('blog.update', id=post['id']) }}"
+              ><i class="fa fa-edit"></i> Edit</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

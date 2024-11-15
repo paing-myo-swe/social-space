@@ -1,0 +1,100 @@
+/* Importing fonts from Google */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+/* Reseting */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #553687;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span,
+div {
+  color: white;
+}
+
+a:hover {
+  color: #ca14ee;
+}
+
+.logo {
+  border-radius: 50%;
+  border: 1px solid #fff;
+  box-shadow: 3px 3px 3px #b1b1b1, -2px -2px 2px #fff;
+}
+
+.btn-login {
+  border: solid 1px #fff;
+  color: #fff;
+}
+
+.btn-register {
+  border: solid 1px #fff;
+  color: #fff;
+  background-color: #8b4de8;
+}
+
+.post-card {
+  background-color: #fff;
+  padding: 10px;
+  margin: 10px;
+}
+
+.post-card .card-header {
+  color: #651ed8;
+}
+
+.post-card .card-title {
+  color: #553687;
+}
+
+.post-card .card-text {
+  color: #330d6f;
+}
+
+.post-card .media-body .label {
+  color: #651ed8;
+}
+
+.post-card .media-heading {
+  color: #651ed8;
+}
+
+.btn-new-post {
+  background-color: #8b4de8;
+  color: #fff;
+  border-radius: 25px;
+}
+
+.posts {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.btn-submit-post {
+  background-color: #8b4de8;
+  color: #fff;
+  border-radius: 25px;
+}
+
+.modal-content {
+  background-color: #9b65eb;
+}

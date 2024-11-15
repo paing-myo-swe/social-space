@@ -1,0 +1,42 @@
+{% extends 'auth.html' %} {% block title %} Login {% endblock %} {% block
+content %}
+<div class="wrapper">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-primary" role="alert">
+    <div class="flash">{{ message }}</div>
+  </div>
+  {% endfor %}
+  <div class="logo">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" />
+  </div>
+  <div class="text-center mt-4 name">Social Space</div>
+  <form class="p-3 mt-3" method="post">
+    <div class="form-field d-flex align-items-center">
+      <span class="far fa-user"></span>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Username"
+        required
+        autocomplete="off"
+        autofocus
+      />
+    </div>
+    <div class="form-field d-flex align-items-center">
+      <span class="fas fa-key"></span>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        required
+      />
+    </div>
+    <button class="btn mt-3">Login</button>
+  </form>
+  <div class="text-center fs-6">
+    <p>Not a member? <a href="register">Sign up</a></p>
+  </div>
+</div>
+{% endblock %}
