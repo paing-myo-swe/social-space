@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% block header %}
+<h1 class="mb-4">
+  {% block title %} Spaces {% endblock %} {% if g.user %}
+  <a class="action btn btn-new-post" href="{{ url_for('space.create') }}"
+    ><i class="fa fa-plus-circle"></i> New Space</a
+  >
+  {% endif %}
+</h1>
+<hr />
+{% endblock %} {% block content %}
+
+<section id="gallery">
+  <div class="container spaces">
+    <div class="row">
+      {% for space in spaces %}
+      <div class="col-lg-4">
+        <div class="space-logo rounded-circle mb-2" width="140" height="140">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" />
+        </div>
+        <h2 class="fw-normal">{{ space['name'] }}</h2>
+        <p>{{ space['description'] }}</p>
+        {% if g.user["id"] %}
+        <p>
+          {% if g.user["id"] not in space['members'] %}
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-toggle="modal"
+            data-target="#spaceModal{{ space['id'] }}"
+          >
+            <i class="fa fa-user-plus"></i> Join
+          </button>
+          {% else %}
+          <a
+            class="btn btn-secondary"
+            href="{{ url_for('space.show', id=space['id']) }}"
+            >View details »</a
+          >
+          {% endif %}
+        </p>
+        {% endif %}
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="spaceModal{{ space['id'] }}"
+        tabindex="-1"
+        aria-labelledby="spaceModal{{ space['id'] }}Label"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3
+                class="modal-title fs-5"
+                id="spaceModal{{ space['id'] }}Label"
+              >
+                Join space!
+              </h3>
+              <button
+                type="button"
+                class="btn"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure to join this space?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <form
+                action="{{ url_for('space.join', id=space['id']) }}"
+                method="post"
+              >
+                <input
+                  class="danger btn btn-join-space"
+                  type="submit"
+                  value="Join"
+                />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

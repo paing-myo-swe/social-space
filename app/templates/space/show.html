@@ -1,0 +1,123 @@
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %} {{ space['name'] }} {% endblock %}</h1>
+{% endblock %} {% block content %}
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <div class="space-logo mb-4">
+            <img
+              src="{{ url_for('static', filename = 'logo.png') }}"
+              alt="logo"
+              width="140"
+              height="140"
+            />
+          </div>
+          <h2 class="fw-normal">About</h2>
+          <p class="mb-2">{{ space['description'] }}</p>
+          <div class="text-center">
+            <p>
+              Space Code: <b><i>"{{ space['code'] }}"</i></b>
+            </p>
+            <p>Admin: <b>@{{ space['admin_name'] }}</b></p>
+            <p>Created At: {{ space['created'] }}</p>
+          </div>
+          {% if g.user["id"] != space["admin_id"] %}
+          <p>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#leaveModal"
+            >
+              Leave <i class="fa fa-sign-out"></i>
+            </button>
+          </p>
+          {% endif %}
+        </div>
+        <hr />
+        <h3>Member List</h3>
+        <div class="row">
+          <div class="col-lg-12">
+            <table class="table text-white">
+              <thead>
+                <tr>
+                  <th scope="col">User ID</th>
+                  <th scope="col">User Name</th>
+                  <th scope="col">Joined At</th>
+                  {% if g.user["id"] == space["admin_id"] %}
+                  <th scope="col">Actions</th>
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for member in members %}
+                <tr>
+                  <th scope="row">{{ member['id'] }}</th>
+                  <td>{{ member['username'] }}</td>
+                  <td>{{ member['joined'] }}</td>
+                  {% if g.user["id"] == space["admin_id"] %}
+                  <td>
+                    {% if member['id'] != g.user['id'] %}
+                    <a
+                      href="{{ url_for('space.remove_member', id = space['id'], user_id = member['id']) }}"
+                      class="btn btn-danger"
+                      ><i class="fa fa-trash"></i> Remove</a
+                    >
+                    {% else %}
+                    <p>Admin</p>
+                    {% endif %}
+                  </td>
+                  {% endif %}
+                </tr>
+
+                {% endfor %}
+              </tbody>
+            </table>
+            <p>Total: {{ members|length }} members</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="leaveModal"
+    tabindex="-1"
+    aria-labelledby="leaveModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title fs-5" id="leaveModalLabel">Leave Space!</h3>
+          <button
+            type="button"
+            class="btn"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure to leave?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancel
+          </button>
+          <form
+            action="{{ url_for('space.leave', id = space['id']) }}"
+            method="post"
+          >
+            <input class="btn btn-danger" type="submit" value="Leave" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -9,7 +9,7 @@
         <label for="title" class="form-label">Title</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control form-field d-flex"
           name="title"
           id="title"
           value="{{ request.form['title'] or post['title'] }}"
@@ -18,15 +18,19 @@
       </div>
       <div class="mb-3">
         <label for="body" class="form-label">Content</label>
-        <textarea class="form-control" name="body" id="body" rows="10">
+        <textarea
+          class="form-control form-field d-flex"
+          name="body"
+          id="body"
+          rows="10"
+        >
 {{ request.form['body'] or post['body'] }}</textarea
         >
       </div>
       <button type="submit" class="btn btn-submit-post">Save</button>
-      <!-- Button trigger modal -->
       <button
         type="button"
-        class="btn btn-outline-danger"
+        class="btn btn-danger"
         data-toggle="modal"
         data-target="#deleteModal"
       >

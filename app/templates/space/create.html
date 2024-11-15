@@ -1,31 +1,31 @@
 {% extends 'base.html' %} {% block header %}
-<h1>{% block title %}New Post{% endblock %}</h1>
+<h1>{% block title %}New Space{% endblock %}</h1>
 {% endblock %} {% block content %}
 <hr />
 <section class="content">
   <div class="container">
-    <h4>Create your own post!</h4>
+    <h4>Create your own space!</h4>
     <form method="post">
       <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
+        <label for="title" class="form-label">Name</label>
         <input
           type="text"
           class="form-control form-field d-flex"
-          name="title"
-          id="title"
-          value="{{ request.form['title'] }}"
+          name="name"
+          id="name"
+          value="{{ request.form['name'] }}"
           required
         />
       </div>
       <div class="mb-3">
-        <label for="body" class="form-label">Content</label>
+        <label for="description" class="form-label">Description</label>
         <textarea
           class="form-control form-field d-flex"
-          name="body"
-          id="body"
+          name="description"
+          id="description"
           rows="10"
         >
-{{ request.form['body'] }}</textarea
+{{ request.form['description'] }}</textarea
         >
       </div>
       <button type="submit" class="btn btn-submit-post">Submit</button>

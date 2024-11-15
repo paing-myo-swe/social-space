@@ -6,6 +6,7 @@
   >
   {% endif %}
 </h1>
+<hr />
 {% endblock %} {% block content %}
 
 <section id="gallery">
@@ -23,7 +24,8 @@
                 <h5 class="media-heading m-1">@{{ post['username'] }}</h5>
                 <p>
                   <span class="label label-info small"
-                    >Date: {{ post['created'].strftime('%d-%m-%Y, %T') }}</span
+                    >Posted On: {{ post['created'].strftime('%a-%m-%Y, %T')
+                    }}</span
                   >
                 </p>
               </div>

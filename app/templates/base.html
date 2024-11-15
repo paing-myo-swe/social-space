@@ -61,7 +61,11 @@
             class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
           >
             <li><a href="/" class="nav-link px-2 link">Home</a></li>
-            <li><a href="#" class="nav-link px-2 link">Features</a></li>
+            <li>
+              <a href="{{ url_for('space.index') }}" class="nav-link px-2 link"
+                >Spaces</a
+              >
+            </li>
             <li><a href="#" class="nav-link px-2 link">About</a></li>
           </ul>
 
@@ -86,8 +90,17 @@
               </ul>
             </div>
             {% else %}
-            <a href="login" type="button" class="btn btn-login me-2"> Login </a>
-            <a href="register" type="button" class="btn btn-register"
+            <a
+              href="{{ url_for('auth.login') }}"
+              type="button"
+              class="btn btn-login me-2"
+            >
+              Login
+            </a>
+            <a
+              href="{{ url_for('auth.register') }}"
+              type="button"
+              class="btn btn-register"
               >Register</a
             >
             {% endif %}

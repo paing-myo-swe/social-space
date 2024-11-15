@@ -42,4 +42,8 @@ def create_app(test_config=None):
     app.register_blueprint(blog.bp)
     app.add_url_rule("/", endpoint="index")
 
+    from . import space
+
+    app.register_blueprint(space.bp)
+
     return app
