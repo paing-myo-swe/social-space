@@ -1,4 +1,13 @@
-from flask import Blueprint, flash, g, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    flash,
+    g,
+    redirect,
+    render_template,
+    request,
+    url_for,
+    session,
+)
 from werkzeug.exceptions import abort
 
 from app.auth import login_required
@@ -6,6 +15,19 @@ from app.db import get_db
 
 import random
 from string import ascii_letters
+
+from app import rooms
+
+
+# Generate a random space code
+def generate_space_code(length: int) -> str:
+    while True:
+        code_chars = [random.choice(ascii_letters) for _ in range(length)]
+        code = "".join(code_chars)
+        existing_codes = "SELECT code FROM spaces"
+        if code not in existing_codes:
+            return code
+
 
 bp = Blueprint("space", __name__, url_prefix="/spaces")
 
@@ -188,11 +210,47 @@ def update(id):
     return render_template("space/edit.html", space=space)
 
 
-# Generate a random space code
-def generate_space_code(length: int) -> str:
-    while True:
-        code_chars = [random.choice(ascii_letters) for _ in range(length)]
-        code = "".join(code_chars)
-        existing_codes = "SELECT code FROM spaces"
-        if code not in existing_codes:
-            return code
+@bp.route("/<int:id>/chat", methods=["GET"])
+@login_required
+def chat(id):
+    if "room" in session:
+        session.pop("room")
+    if "name" in session:
+        session.pop("name")
+    db = get_db()
+    space = db.execute("SELECT * FROM spaces WHERE id = ?", (id,)).fetchone()
+
+    if space is None:
+        abort(404, f"Space id {id} doesn't exist.")
+
+    members = get_space_members(id)
+    is_member = g.user["id"] in [member["user_id"] for member in members]
+    if not is_member:
+        abort(403, f"You are not a member of this space.")
+
+    room_code = space["code"]
+    new_room = {"members": 0, "messages": []}
+    rooms[room_code] = new_room
+    session["room"] = space["code"]
+    session["name"] = g.user["username"]
+    room = session.get("room")
+    name = session.get("name")
+    messages = rooms[room]["messages"]
+    return render_template(
+        "space/chat.html",
+        space=space,
+        room=room,
+        username=name,
+        messages=messages,
+    )
+
+
+# route for leave chat
+@bp.route("/<int:id>/leave_chat", methods=["GET"])
+@login_required
+def leave_chat(id):
+    if "room" in session:
+        session.pop("room")
+    if "name" in session:
+        session.pop("name")
+    return redirect(url_for("space.show", id=id))
