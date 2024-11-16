@@ -81,6 +81,7 @@ def create():
                 (space_cur.lastrowid, g.user["id"]),
             )
             db.commit()
+            flash("Space created successfully.")
             return redirect(url_for("space.index"))
 
     return render_template("space/create.html")
@@ -119,6 +120,7 @@ def join(id):
         (id, g.user["id"]),
     )
     db.commit()
+    flash("You have joined this space.")
     return redirect(url_for("space.show", id=id))
 
 
@@ -131,6 +133,7 @@ def leave(id):
         (id, g.user["id"]),
     )
     db.commit()
+    flash("You have left from this space.")
     return redirect(url_for("space.index"))
 
 
@@ -144,6 +147,45 @@ def remove_member(id, user_id):
     )
     db.commit()
     return redirect(url_for("space.show", id=id))
+
+
+@bp.route("/<int:id>/update", methods=("GET", "POST"))
+@login_required
+def update(id):
+    db = get_db()
+    space = db.execute(
+        "SELECT id, name, description, admin_id FROM spaces WHERE id = ?", (id,)
+    ).fetchone()
+
+    if space is None:
+        abort(404, f"Space id {id} doesn't exist.")
+
+    if space["admin_id"] != g.user["id"]:
+        abort(403, "You don't have permission to edit this space.")
+
+    if request.method == "POST":
+        name = request.form["name"]
+        description = request.form["description"]
+        error = None
+
+        if not name:
+            error = "Name is required."
+
+        if not description:
+            error = "Description is required."
+
+        if error is not None:
+            flash(error)
+        else:
+            db.execute(
+                "UPDATE spaces SET name = ?, description = ? WHERE id = ?",
+                (name, description, id),
+            )
+            db.commit()
+            flash("Space updated successfully.")
+            return redirect(url_for("space.index"))
+
+    return render_template("space/edit.html", space=space)
 
 
 # Generate a random space code

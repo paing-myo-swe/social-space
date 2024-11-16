@@ -35,7 +35,7 @@ def register():
 
         if error is None:
             try:
-                db.execute(
+                user_cur = db.execute(
                     "INSERT INTO users (username, password) VALUES (?, ?)",
                     (username, generate_password_hash(password)),
                 )
@@ -43,7 +43,10 @@ def register():
             except db.IntegrityError:
                 error = f"User {username} is already registered."
             else:
-                return redirect(url_for("auth.login"))
+                session.clear()
+                session["user_id"] = user_cur.lastrowid
+                flash(f"User {username} is registered.")
+                return redirect(url_for("index"))
 
         flash(error)
 
@@ -103,3 +106,9 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+
+@bp.route("/profile")
+@login_required
+def profile():
+    return render_template("auth/profile.html", user=g.user)

@@ -38,6 +38,7 @@ def create():
                 (title, body, g.user["id"]),
             )
             db.commit()
+            flash("Post created successfully.")
             return redirect(url_for("blog.index"))
 
     return render_template("blog/create.html")
@@ -86,6 +87,7 @@ def update(id):
                 (title, body, id),
             )
             db.commit()
+            flash("Post updated successfully.")
             return redirect(url_for("blog.index"))
 
     return render_template("blog/edit.html", post=post)
@@ -98,4 +100,5 @@ def delete(id):
     db = get_db()
     db.execute("DELETE FROM posts WHERE id = ?", (id,))
     db.commit()
+    flash("Post deleted successfully.")
     return redirect(url_for("blog.index"))

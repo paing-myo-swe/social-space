@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %}Edit Space "{{ space['name'] }}"{% endblock %}</h1>
+{% endblock %} {% block content %}
+<hr />
+<section class="content">
+  <div class="container">
+    <form method="post">
+      <div class="mb-3">
+        <label for="title" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control form-field d-flex"
+          name="name"
+          id="name"
+          value="{{ request.form['name'] or space['name'] }}"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          class="form-control form-field d-flex"
+          name="description"
+          id="description"
+          rows="10"
+        >
+{{ request.form['description'] or space['description'] }}</textarea
+        >
+      </div>
+      <button type="submit" class="btn btn-submit-post">Submit</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

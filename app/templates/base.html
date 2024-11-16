@@ -81,10 +81,14 @@
                 <i span class="fa fa-user-circle fa-2x"></i>
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa fa-user-circle"></i> Profile</a
+                  >
+                </li>
                 <li>
                   <a class="dropdown-item" href="{{ url_for('auth.logout') }}"
-                    >Logout</a
+                    ><i class="fa fa-sign-out"></i> Logout</a
                   >
                 </li>
               </ul>
@@ -109,12 +113,36 @@
         <section class="content">
           <header>{% block header %}{% endblock %}</header>
           {% for message in get_flashed_messages() %}
-          <div class="alert alert-primary" role="alert">
-            <div class="flash">{{ message }}</div>
+          <div
+            class="alert alert-info d-flex justify-content-between"
+            role="alert"
+          >
+            <div class="flash text-dark alert-dismissible" role="alert">
+              {{ message }}
+            </div>
+            <button
+              type="button"
+              class="btn"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <i class="fa fa-times"></i>
+            </button>
           </div>
           {% endfor %} {% block content %}{% endblock %}
         </section>
       </div>
+      <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+          <li class="nav-item">
+            <a href="/" class="nav-link px-2">Home</a>
+          </li>
+        </ul>
+        <p class="text-center">
+          &copy; CS50 2024's Final Project - "Social Space"
+        </p>
+        <p class="text-center">@Paing Myo Swe</p>
+      </footer>
     </main>
   </body>
 </html>

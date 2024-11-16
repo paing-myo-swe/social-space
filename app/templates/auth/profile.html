@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block header %}
+<h1>{% block title %} Profile {% endblock %}</h1>
+{% endblock %} {% block content %}
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <div class="space-logo mb-4 text-center">
+            <i class="fa fa-user-circle fa-5x"></i>
+          </div>
+          <div class="text-center">
+            <p>
+              ID: <b><i>{{ user['id'] }}</i></b>
+            </p>
+            <p>Username: <b>@{{ user['username'] }}</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

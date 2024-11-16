@@ -95,8 +95,12 @@ a:hover {
   border-radius: 25px;
 }
 
-.modal-content {
+.modal-header {
   background-color: #9b65eb;
+}
+
+.modal-body p {
+  color: #9b65eb;
 }
 
 .form-field input {

@@ -23,8 +23,8 @@
             <p>Admin: <b>@{{ space['admin_name'] }}</b></p>
             <p>Created At: {{ space['created'] }}</p>
           </div>
-          {% if g.user["id"] != space["admin_id"] %}
           <p>
+            {% if g.user["id"] != space["admin_id"] %}
             <button
               type="button"
               class="btn btn-danger"
@@ -33,8 +33,14 @@
             >
               Leave <i class="fa fa-sign-out"></i>
             </button>
+            {% else %}
+            <a
+              href="{{ url_for('space.update', id = space['id']) }}"
+              class="btn btn-primary"
+              ><i class="fa fa-edit"></i> Edit</a
+            >
+            {% endif %}
           </p>
-          {% endif %}
         </div>
         <hr />
         <h3>Member List</h3>
@@ -55,7 +61,7 @@
                 {% for member in members %}
                 <tr>
                   <th scope="row">{{ member['id'] }}</th>
-                  <td>{{ member['username'] }}</td>
+                  <td>@{{ member['username'] }}</td>
                   <td>{{ member['joined'] }}</td>
                   {% if g.user["id"] == space["admin_id"] %}
                   <td>
@@ -66,7 +72,7 @@
                       ><i class="fa fa-trash"></i> Remove</a
                     >
                     {% else %}
-                    <p>Admin</p>
+                    <p><b>Admin</b></p>
                     {% endif %}
                   </td>
                   {% endif %}
