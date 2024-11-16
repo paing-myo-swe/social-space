@@ -53,6 +53,9 @@ def register():
         elif not password:
             error = "Password is required."
 
+        if len(username) < 3:
+            error = "Username must be at least 3 characters long."
+
         if len(password) < 8:
             error = "Password must be at least 8 characters long."
 
@@ -95,6 +98,7 @@ def login():
         if error is None:
             session.clear()
             session["user_id"] = user["id"]
+            flash(f"User {username} is logged in.")
             return redirect(url_for("index"))
 
         flash(error)

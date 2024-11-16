@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session
+from flask import Flask, session, render_template
 from flask_socketio import SocketIO, join_room, leave_room, send
 
 # A mock database to persist data
@@ -29,9 +29,9 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route("/hello")
-    def hello():
-        return "Hello, World!"
+    @app.route("/about")
+    def about():
+        return render_template("about.html")
 
     socketio = SocketIO(app)
 
@@ -69,7 +69,8 @@ def create_app(test_config=None):
                 del rooms[room]
             send({"message": f"@{name} has left the chat", "sender": ""}, to=room)
 
-    socketio.run(app, debug=True)
+    if __name__ == "__main__":
+        socketio.run(app, debug=True)
 
     from . import db
 
