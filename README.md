@@ -20,29 +20,6 @@ This is my final project of CS50x:CS50's Introduction to Computer Science. Socia
 
 Python, Flask, Flask-SocketIO, SQLite, SQL, HTML, CSS, Bootstrap, JavaScript, jQuery.
 
-#### What new skills will I need to acquire and research?
-
-To make this project more functional and feature-rich, I will need
-to acquire and research the following skills:
-
-- Advanced JavaScript for dynamic content and interactivity
-- React or another front-end framework for building complex user
-  interfaces
-- RESTful API development to enable communication between the front-end and back-end
-- WebSockets for real-time communication features
-- Authentication and authorization techniques for securing user data
-- Unit and integration testing to ensure code quality and
-  reliability
-- Deployment and DevOps skills for managing and scaling the
-  application
-
-#### What might be a good outcome for my project?
-
-This is one of the good outcome project by using this technologies
-(HTML, CSS, JavaScript, Python, and SQL) than I expect. In the
-future, I want to do more features, enhancements technology,
-improvements skill progress in the Web Development technology.
-
 #### Clone The Project
 
 ```
@@ -148,7 +125,7 @@ $ flask --app app run --debug
 
 #### Post Edit Page
 
-- URL: http://127.0.0.1:5000/<post-id>/update
+- URL: http://127.0.0.1:5000/{post-id}/update
 - You will see Post Edit Form and "Delete" button
 - Enter Post title and Post Content
 - After submitted it will redirect back to Home Page
@@ -188,7 +165,7 @@ $ flask --app app run --debug
 
 #### Space Details Page
 
-- URL: http://127.0.0.1:5000/spaces/<space-id>
+- URL: http://127.0.0.1:5000/spaces/{space-id}
 - You will see space logo and about of space description
 - You will also see Space code, Space Admin, Space Created Date and Space Members List
 - In Space Member List there is User Id, User Name and Joined Date are showing
@@ -203,7 +180,7 @@ $ flask --app app run --debug
 
 #### Space's Live Chat Room
 
-- URL: http://127.0.0.1:5000/spaces/<space-id>/chat
+- URL: http://127.0.0.1:5000/spaces/{space-id}/chat
 - This is a realtime Live Chat Room
 - If you click "Live Chat Room" button it will redirect to space's chat room
 - You will see chat messages list and user activities (entered or left)
